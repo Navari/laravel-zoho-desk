@@ -2,6 +2,11 @@
 
 namespace Navari\ZohoDesk\Entities;
 
+use ReflectionClass;
+use ReflectionNamedType;
+use ReflectionType;
+use ReflectionUnionType;
+
 class BaseEntity
 {
     public function toArray(): array
@@ -93,17 +98,24 @@ class BaseEntity
         }
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     private function createObject(int|string $key, array $value)
     {
-        $class = new \ReflectionClass($this);
+        $class = new ReflectionClass($this);
         $property = $class->getProperty($key);
         $type = $property->getType();
-        if ($type->isBuiltin()) {
+
+        if ($type instanceof ReflectionNamedType && $type->isBuiltin()) {
             return $value;
         }
-        $className = $type->getName();
-        if (is_subclass_of($className, __CLASS__)) {
-            return new $className(...$value);
+
+        if ($type instanceof ReflectionNamedType) {
+            $className = $type->getName();
+            if (is_subclass_of($className, __CLASS__)) {
+                return new $className(...$value);
+            }
         }
 
         return $value;

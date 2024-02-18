@@ -3,8 +3,8 @@
 namespace Navari\ZohoDesk\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Orchestra\Testbench\TestCase as Orchestra;
 use Navari\ZohoDesk\ZohoDeskServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {

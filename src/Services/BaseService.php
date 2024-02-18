@@ -13,8 +13,9 @@ use Navari\ZohoDesk\Exceptions\ZohoDeskRequestFailedException;
 class BaseService
 {
     private Client $client;
+
     public function __construct(
-    ){
+    ) {
         $this->client = new Client();
     }
 
@@ -24,12 +25,11 @@ class BaseService
      */
     protected function getAccessToken(
         bool $disableCache = false
-    ): string
-    {
-        if (!$disableCache && Cache::has('zoho-desk-access-token')) {
+    ): string {
+        if (! $disableCache && Cache::has('zoho-desk-access-token')) {
             return Cache::get('zoho-desk-access-token');
         }
-        $uri = new Uri(config('zoho-desk.oAuthBaseUrl') . '/token');
+        $uri = new Uri(config('zoho-desk.oAuthBaseUrl').'/token');
 
         $request = new Request('POST', $uri->withQuery(
             http_build_query([
@@ -39,15 +39,15 @@ class BaseService
                 'grant_type' => 'refresh_token',
             ])
         ));
-        try{
+        try {
             $response = $this->client->send($request);
         } catch (GuzzleException $e) {
             throw new ZohoDeskRequestFailedException('Failed to get access token', 0, $e);
         }
 
-        try{
+        try {
             $data = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
-        }catch (\JsonException $e){
+        } catch (\JsonException $e) {
             throw new ZohoDeskBadResponseException('Failed to parse access token response', 0, $e);
         }
 
@@ -67,21 +67,20 @@ class BaseService
         $request = new Request($method, $uri->withQuery(
             http_build_query($query)
         ), array_merge($headers, [
-            'Authorization' => 'Zoho-oauthtoken ' . $accessToken,
+            'Authorization' => 'Zoho-oauthtoken '.$accessToken,
             'orgId' => config('zoho-desk.organizationId'),
         ]), json_encode($body, JSON_THROW_ON_ERROR));
-        try{
+        try {
             $response = $this->client->send($request);
-        }catch (GuzzleException $e){
-            throw new ZohoDeskRequestFailedException('Failed to connect url : '. $url, 0, $e);
+        } catch (GuzzleException $e) {
+            throw new ZohoDeskRequestFailedException('Failed to connect url : '.$url, 0, $e);
         }
-        try{
+        try {
             $data = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
-        }catch (\JsonException $e){
-            throw new ZohoDeskBadResponseException('Failed to parse response : '. $response->getBody()->getContents(), 0, $e);
+        } catch (\JsonException $e) {
+            throw new ZohoDeskBadResponseException('Failed to parse response : '.$response->getBody()->getContents(), 0, $e);
         }
 
         return $data;
     }
-
 }

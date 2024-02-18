@@ -19,6 +19,7 @@ class ZohoDeskDepartmentService extends BaseService
     public function createDepartment(CreateDepartmentEntity $departmentEntity): CreateDepartmentResponseEntity
     {
         $data = $this->sendRequest('POST', 'departments', body: $departmentEntity->toArray());
+
         return new CreateDepartmentResponseEntity(
             ...$data
         );
@@ -26,6 +27,7 @@ class ZohoDeskDepartmentService extends BaseService
 
     /**
      * @return DepartmentResponseEntity[]
+     *
      * @throws ZohoDeskBadResponseException
      * @throws \JsonException
      * @throws ZohoDeskRequestFailedException
@@ -33,7 +35,8 @@ class ZohoDeskDepartmentService extends BaseService
     public function getDepartments(): array
     {
         $data = $this->sendRequest('GET', 'departments');
-        return array_map(static function($department){
+
+        return array_map(static function ($department) {
             return new DepartmentResponseEntity(
                 ...$department
             );
@@ -48,6 +51,7 @@ class ZohoDeskDepartmentService extends BaseService
     public function getDepartment(string $departmentId): DepartmentResponseEntity
     {
         $data = $this->sendRequest('GET', "departments/$departmentId");
+
         return new DepartmentResponseEntity(
             ...$data
         );
@@ -60,8 +64,8 @@ class ZohoDeskDepartmentService extends BaseService
      */
     public function getGeneralDepartment(): DepartmentResponseEntity
     {
-        $data = $this->sendRequest('GET', "departments", query: ['searchStr' => 'General']);
-        if(count($data) === 0){
+        $data = $this->sendRequest('GET', 'departments', query: ['searchStr' => 'General']);
+        if (count($data) === 0) {
             $defaultAgent = ZohoDesk::getDefaultAgent();
             $createDepartmentEntity = new CreateDepartmentEntity();
             $createDepartmentEntity->name = 'Test Department';
@@ -70,13 +74,15 @@ class ZohoDeskDepartmentService extends BaseService
             $createDepartmentEntity->isAssignToTeamEnabled = true;
             $createDepartmentEntity->nameInCustomerPortal = 'Test Department';
             $createDepartmentEntity->associatedAgentIds = [
-                $defaultAgent->id
+                $defaultAgent->id,
             ];
             $createDepartmentResponseEntity = $this->createDepartment($createDepartmentEntity);
+
             return new DepartmentResponseEntity(
                 ...$createDepartmentResponseEntity->toArray()
             );
         }
+
         return new DepartmentResponseEntity(
             ...$data['data'][0]
         );

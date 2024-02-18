@@ -2,8 +2,6 @@
 
 namespace Navari\ZohoDesk;
 
-use Navari\ZohoDesk\Services\ZohoDeskAccessTokenService;
-use Navari\ZohoDesk\Services\ZohoDeskDepartmentService;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -21,9 +19,9 @@ class ZohoDeskServiceProvider extends PackageServiceProvider
             ->hasConfigFile();
     }
 
-//    public function registeringPackage()
-//    {
-//        $this->app->singleton('app', ZohoDesk::class);
-//    }
+    //    public function registeringPackage()
+    //    {
+    //        $this->app->singleton('app', ZohoDesk::class);
+    //    }
 
 }

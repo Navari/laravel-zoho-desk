@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @see \Navari\ZohoDesk\ZohoDesk
+ *
  * @method static \Navari\ZohoDesk\Entities\CreateDepartmentResponseEntity createDepartment(\Navari\ZohoDesk\Entities\CreateDepartmentEntity $createDepartmentEntity)
  * @method static \Navari\ZohoDesk\Entities\AgentResponseEntity getDefaultAgent()
  * @method static \Navari\ZohoDesk\Entities\CreateDepartmentResponseEntity[] getDepartments()

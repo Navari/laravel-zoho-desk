@@ -20,7 +20,8 @@ class ZohoDesk
         private readonly ZohoDeskDepartmentService $zohoDeskDepartmentService,
         private readonly ZohoDeskAgentService $zohoDeskAgentService,
         private readonly ZohoDeskTicketService $zohoDeskTicketService
-    ){}
+    ) {
+    }
 
     /**
      * @throws ZohoDeskBadResponseException
@@ -106,5 +107,4 @@ class ZohoDesk
     {
         return $this->zohoDeskAgentService;
     }
-
 }

@@ -105,8 +105,7 @@ class BaseEntity
         if (is_subclass_of($className, __CLASS__)) {
             return new $className(...$value);
         }
+
         return $value;
     }
-
-
 }

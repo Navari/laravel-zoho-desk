@@ -8,7 +8,6 @@ use Navari\ZohoDesk\Exceptions\ZohoDeskRequestFailedException;
 
 class ZohoDeskAgentService extends BaseService
 {
-
     /**
      * @throws ZohoDeskBadResponseException
      * @throws \JsonException
@@ -18,11 +17,12 @@ class ZohoDeskAgentService extends BaseService
     {
         $data = $this->sendRequest('GET', 'agents', query: [
             'fieldName' => 'emailId',
-            'searchStr' => config('zoho-desk.agentEmail')
+            'searchStr' => config('zoho-desk.agentEmail'),
         ]);
-        $data = array_filter($data['data'], static function($agent){
+        $data = array_filter($data['data'], static function ($agent) {
             return $agent['emailId'] === config('zoho-desk.agentEmail');
         });
+
         return new AgentResponseEntity(
             ...$data[0]
         );
@@ -36,6 +36,7 @@ class ZohoDeskAgentService extends BaseService
     public function getAgent(string $agentId)
     {
         $data = $this->sendRequest('GET', "agents/$agentId");
+
         return new AgentResponseEntity(
             ...$data
         );

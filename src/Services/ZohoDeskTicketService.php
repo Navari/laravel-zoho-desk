@@ -10,7 +10,6 @@ use Navari\ZohoDesk\Exceptions\ZohoDeskRequestFailedException;
 
 class ZohoDeskTicketService extends BaseService
 {
-
     /**
      * @throws ZohoDeskBadResponseException
      * @throws \JsonException
@@ -19,7 +18,8 @@ class ZohoDeskTicketService extends BaseService
     public function getTickets(): array
     {
         $data = $this->sendRequest('GET', 'tickets');
-        return array_map(static function($ticket){
+
+        return array_map(static function ($ticket) {
             return new TicketResponseEntity(
                 ...$ticket
             );
@@ -34,6 +34,7 @@ class ZohoDeskTicketService extends BaseService
     public function getTicket(string $ticketId): TicketResponseEntity
     {
         $data = $this->sendRequest('GET', 'tickets/'.$ticketId);
+
         return new TicketResponseEntity(
             ...$data['data']
         );
@@ -59,6 +60,7 @@ class ZohoDeskTicketService extends BaseService
         $entity->contact = $contact;
 
         $data = $this->sendRequest('POST', 'tickets', body: $entity->toArray());
+
         return new TicketResponseEntity(
             ...$data
         );

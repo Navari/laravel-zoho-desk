@@ -5,6 +5,7 @@ use Navari\ZohoDesk\Facades\ZohoDesk;
 
 it('creates a department', function () {
     expect(true)->toBeTrue();
+
     return;
     $defaultAgent = ZohoDesk::getDefaultAgent();
     expect($defaultAgent->id)->not()->toBeNull();
@@ -15,7 +16,7 @@ it('creates a department', function () {
     $createDepartmentEntity->isAssignToTeamEnabled = true;
     $createDepartmentEntity->nameInCustomerPortal = 'Test Department';
     $createDepartmentEntity->associatedAgentIds = [
-        $defaultAgent->id
+        $defaultAgent->id,
     ];
 
     $createDepartmentResponseEntity = ZohoDesk::createDepartment($createDepartmentEntity);
@@ -36,4 +37,3 @@ it('gets list of departments', function () {
             ->and($department->name)->not()->toBeNull();
     });
 });
-

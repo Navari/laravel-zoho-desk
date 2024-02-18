@@ -4,8 +4,6 @@ namespace Navari\ZohoDesk\Entities;
 
 use ReflectionClass;
 use ReflectionNamedType;
-use ReflectionType;
-use ReflectionUnionType;
 
 class BaseEntity
 {

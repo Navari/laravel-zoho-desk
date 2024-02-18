@@ -7,13 +7,6 @@
 
 This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
 
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-zoho-desk.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-zoho-desk)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
 
 ## Installation
 
@@ -21,13 +14,6 @@ You can install the package via composer:
 
 ```bash
 composer require navari/laravel-zoho-desk
-```
-
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="laravel-zoho-desk-migrations"
-php artisan migrate
 ```
 
 You can publish the config file with:
@@ -40,21 +26,34 @@ This is the contents of the published config file:
 
 ```php
 return [
+    'organizationId' => env('ZOHO_DESK_ORGANIZATION_ID', ''),
+    'departmentId' => env('ZOHO_DESK_DEPARTMENT_ID', ''),
+    'clientId' => env('ZOHO_DESK_CLIENT_ID', ''),
+    'clientSecret' => env('ZOHO_DESK_CLIENT_SECRET', ''),
+    'oAuthBaseUrl' => env('ZOHO_DESK_OAUTH_BASE_URL', ''),
+    'refreshToken' => env('ZOHO_DESK_REFRESH_TOKEN', ''),
+    'baseApiUrl' => env('ZOHO_DESK_BASE_API_URL', 'https://desk.zoho.com/api/v1/'),
+    'agentEmail' => env('ZOHO_DESK_AGENT_EMAIL', ''),
 ];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="laravel-zoho-desk-views"
 ```
 
 ## Usage
 
 ```php
-$zohoDesk = new Navari\ZohoDesk();
-echo $zohoDesk->echoPhrase('Hello, Navari!');
+$createTicketEntity = new \Navari\ZohoDesk\Entities\CreateTicketEntity();
+
+$createTicketEntity->firstName = 'Larus';
+$createTicketEntity->lastName = 'Navari';
+$createTicketEntity->email = 'larustr@gmail.com';
+$createTicketEntity->subject = 'Test Ticket';
+$createTicketEntity->departmentId = '123456789';
+$createTicketEntity->message = 'This is a test ticket';
+$ticket = \Navari\ZohoDesk\ZohoDesk::createTicket($createTicketEntity);
 ```
+
+## Usage for other methods
+All methods usage will be similar to the above example
+
 
 ## Testing
 
